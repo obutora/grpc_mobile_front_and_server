@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package sample;
+
+// timeStampはimportすれば使えるようになる
+import "google/protobuf/timestamp.proto";
+
+// enumや自前の型も定義可能
+// 配列を使いたい場合repeatedとする
+message Sample {
+    int32 id = 1;
+    string name = 2;
+    SampleType type = 3;
+    ChildSample child = 4;
+    google.protobuf.Timestamp updatedAt = 5;
+    repeated string tags = 6;
+}
+
+enum SampleType {
+    NORMAL = 0;
+    SPECIAL = 1;
+}
+
+message ChildSample {
+    string id = 1;
+    string childName = 2;
+}
+
+
+service SampleService {
+    rpc GetSample (GetSampleRequest) returns (Sample) {}
+}
+
+// リクエストにも型が必要
+message GetSampleRequest {
+    string id = 1;
+}
+
