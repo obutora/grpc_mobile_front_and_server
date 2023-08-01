@@ -25,6 +25,10 @@ class SampleServiceClient extends $grpc.Client {
       '/sample.SampleService/GetSample',
       ($0.GetSampleRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Sample.fromBuffer(value));
+  static final _$getStreamingSample = $grpc.ClientMethod<$0.GetSampleRequest, $0.StreamResult>(
+      '/sample.SampleService/GetStreamingSample',
+      ($0.GetSampleRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.StreamResult.fromBuffer(value));
 
   SampleServiceClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -34,6 +38,10 @@ class SampleServiceClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.Sample> getSample($0.GetSampleRequest request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getSample, request, options: options);
+  }
+
+  $grpc.ResponseStream<$0.StreamResult> getStreamingSample($0.GetSampleRequest request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$getStreamingSample, $async.Stream.fromIterable([request]), options: options);
   }
 }
 
@@ -49,11 +57,23 @@ abstract class SampleServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetSampleRequest.fromBuffer(value),
         ($0.Sample value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetSampleRequest, $0.StreamResult>(
+        'GetStreamingSample',
+        getStreamingSample_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.GetSampleRequest.fromBuffer(value),
+        ($0.StreamResult value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.Sample> getSample_Pre($grpc.ServiceCall call, $async.Future<$0.GetSampleRequest> request) async {
     return getSample(call, await request);
   }
 
+  $async.Stream<$0.StreamResult> getStreamingSample_Pre($grpc.ServiceCall call, $async.Future<$0.GetSampleRequest> request) async* {
+    yield* getStreamingSample(call, await request);
+  }
+
   $async.Future<$0.Sample> getSample($grpc.ServiceCall call, $0.GetSampleRequest request);
+  $async.Stream<$0.StreamResult> getStreamingSample($grpc.ServiceCall call, $0.GetSampleRequest request);
 }

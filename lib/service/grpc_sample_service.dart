@@ -1,5 +1,10 @@
 import 'package:grpc/grpc.dart';
-import 'package:grpc_mobile_server/grpc_gen/proto/sample.pbgrpc.dart';
+import 'package:grpc_mobile_server/provider/grpc_channel_provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+// import 'package:grpc_mobile_server/grpc_gen/proto/sample.pbgrpc.dart';
+// import 'package:grpc_mobile_server/grpc_gen/sample.pb.dart';
+
+import '../grpc_gen/sample.pbgrpc.dart';
 
 class GrpcSampleService {
   static Future<Sample> getSample(ClientChannel channel, String id) async {
@@ -17,4 +22,18 @@ class GrpcSampleService {
 
     return res;
   }
+
+  static Stream<StreamResult> getStreamingSample(ClientChannel channel) {
+    final client = SampleServiceClient(channel);
+    final request = GetSampleRequest()..id = 'id';
+
+    return client.getStreamingSample(request);
+  }
 }
+
+final streamProvider = StreamProvider.autoDispose((ref) {
+  print('stream');
+  final channel = ref.watch(grpcChannelProvider);
+
+  return GrpcSampleService.getStreamingSample(channel);
+});

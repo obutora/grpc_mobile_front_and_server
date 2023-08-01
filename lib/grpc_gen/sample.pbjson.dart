@@ -72,3 +72,15 @@ const GetSampleRequest$json = {
 final $typed_data.Uint8List getSampleRequestDescriptor = $convert.base64Decode(
     'ChBHZXRTYW1wbGVSZXF1ZXN0Eg4KAmlkGAEgASgJUgJpZA==');
 
+@$core.Deprecated('Use streamResultDescriptor instead')
+const StreamResult$json = {
+  '1': 'StreamResult',
+  '2': [
+    {'1': 'value', '3': 1, '4': 1, '5': 5, '10': 'value'},
+  ],
+};
+
+/// Descriptor for `StreamResult`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List streamResultDescriptor = $convert.base64Decode(
+    'CgxTdHJlYW1SZXN1bHQSFAoFdmFsdWUYASABKAVSBXZhbHVl');
+

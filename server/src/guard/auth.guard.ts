@@ -1,6 +1,7 @@
-import { Metadata } from "@grpc/grpc-js";
+import { Metadata, ServerUnaryCall } from "@grpc/grpc-js";
 import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from "@nestjs/common";
 import { RpcException } from "@nestjs/microservices";
+import { Server } from "http";
 import { Observable } from "rxjs";
 
 @Injectable()
@@ -10,15 +11,20 @@ export class AuthGuard implements CanActivate {
         const metaData = context.switchToRpc().getContext() as Metadata;
         const authToken = metaData.get('authorization')[0];
 
-
-
-        try {  
+        try {
             // NOTE : ここで認証ロジックを入れる
             console.log('Auth Guard/metaData', authToken);
 
-            // 認証に失敗したことを想定して、テスト的に例外を投げる
-            throw new Error();
+            // 認証に失敗したことを想定して、
+            // エラーを返す場合は以下のコメントを外す
+            // throw new Error();
 
+            // metaDataをサーバーでセットする例            
+            metaData.add('role', 'admin');
+
+            // 認証成功の場合はtrueを返せばOK
+            return true;
+            // throw new Error();
         } catch (e) { 
             throw new RpcException({
                 code: 16,

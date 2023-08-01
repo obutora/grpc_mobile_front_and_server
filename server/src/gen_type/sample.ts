@@ -35,19 +35,27 @@ export interface GetSampleRequest {
   id: string;
 }
 
+export interface StreamResult {
+  value: number;
+}
+
 export const SAMPLE_PACKAGE_NAME = "sample";
 
 export interface SampleServiceClient {
   getSample(request: GetSampleRequest, metadata: Metadata, ...rest: any): Observable<Sample>;
+
+  getStreamingSample(request: GetSampleRequest, metadata: Metadata, ...rest: any): Observable<StreamResult>;
 }
 
 export interface SampleServiceController {
   getSample(request: GetSampleRequest, metadata: Metadata, ...rest: any): Promise<Sample> | Observable<Sample> | Sample;
+
+  getStreamingSample(request: GetSampleRequest, metadata: Metadata, ...rest: any): Observable<StreamResult>;
 }
 
 export function SampleServiceControllerMethods() {
   return function (constructor: Function) {
-    const grpcMethods: string[] = ["getSample"];
+    const grpcMethods: string[] = ["getSample", "getStreamingSample"];
     for (const method of grpcMethods) {
       const descriptor: any = Reflect.getOwnPropertyDescriptor(constructor.prototype, method);
       GrpcMethod("SampleService", method)(constructor.prototype[method], method, descriptor);

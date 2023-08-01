@@ -202,6 +202,48 @@ class GetSampleRequest extends $pb.GeneratedMessage {
   void clearId() => clearField(1);
 }
 
+class StreamResult extends $pb.GeneratedMessage {
+  factory StreamResult() => create();
+  StreamResult._() : super();
+  factory StreamResult.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StreamResult.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StreamResult', package: const $pb.PackageName(_omitMessageNames ? '' : 'sample'), createEmptyInstance: create)
+    ..a<$core.int>(1, _omitFieldNames ? '' : 'value', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StreamResult clone() => StreamResult()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StreamResult copyWith(void Function(StreamResult) updates) => super.copyWith((message) => updates(message as StreamResult)) as StreamResult;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StreamResult create() => StreamResult._();
+  StreamResult createEmptyInstance() => create();
+  static $pb.PbList<StreamResult> createRepeated() => $pb.PbList<StreamResult>();
+  @$core.pragma('dart2js:noInline')
+  static StreamResult getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamResult>(create);
+  static StreamResult? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get value => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set value($core.int v) { $_setSignedInt32(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasValue() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearValue() => clearField(1);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

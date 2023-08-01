@@ -29,10 +29,15 @@ message ChildSample {
 
 service SampleService {
     rpc GetSample (GetSampleRequest) returns (Sample) {}
+    rpc GetStreamingSample (GetSampleRequest) returns (stream StreamResult) {}
 }
 
 // リクエストにも型が必要
 message GetSampleRequest {
     string id = 1;
+}
+
+message StreamResult {
+    int32 value = 1;
 }
 
