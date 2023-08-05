@@ -5,7 +5,7 @@ package sample;
 // timeStampはimportすれば使えるようになる
 import "google/protobuf/timestamp.proto";
 
-// enumや自前の型も定義可能
+// 自前の型を入れ子にして利用可能
 // 配列を使いたい場合repeatedとする
 message Sample {
     int32 id = 1;
@@ -16,6 +16,7 @@ message Sample {
     repeated string tags = 6;
 }
 
+// enumも定義可能
 enum SampleType {
     NORMAL = 0;
     SPECIAL = 1;
@@ -27,17 +28,18 @@ message ChildSample {
 }
 
 
+// メソッド群を定義
 service SampleService {
     rpc GetSample (GetSampleRequest) returns (Sample) {}
     rpc GetStreamingSample (GetSampleRequest) returns (stream StreamResult) {}
 }
 
-// リクエストにも型が必要
-message GetSampleRequest {
-    string id = 1;
-}
+    // リクエストにも型が必要
+    message GetSampleRequest {
+        string id = 1;
+    }
 
-message StreamResult {
-    int32 value = 1;
-}
+    message StreamResult {
+        int32 value = 1;
+    }
 
