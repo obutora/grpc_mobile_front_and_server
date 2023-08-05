@@ -1,6 +1,6 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { AppService } from './app.service';
-import { GrpcMethod, GrpcStreamMethod, RpcException } from '@nestjs/microservices';
+import { GrpcMethod, RpcException } from '@nestjs/microservices';
 import { GetSampleRequest, Sample, SampleServiceController, StreamResult } from './gen_type/sample';
 import { Metadata } from '@grpc/grpc-js';
 import { AuthGuard } from './guard/auth.guard';
@@ -10,12 +10,7 @@ import { Observable, Subject } from 'rxjs';
 @Controller()
 export class AppController implements SampleServiceController {
   constructor(private readonly appService: AppService) {}
-
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
+  
   @UseGuards(AuthGuard)
   @GrpcMethod('SampleService')
   getSample(data: GetSampleRequest, metadata: Metadata): Sample{
@@ -39,14 +34,11 @@ export class AppController implements SampleServiceController {
     };
   }
 
-  // @UseGuards(AuthGuard)
   @GrpcMethod('SampleService')
   getStreamingSample(request: GetSampleRequest, metadata: Metadata, ...rest: any): Observable<StreamResult> {
     console.log('streaming start');
     const subject = new Subject<StreamResult>();
     var value = 0;
-
-  
 
     const onNext = async () => { 
       value++;
@@ -70,7 +62,6 @@ export class AppController implements SampleServiceController {
         subject.complete();
         console.log('completed');
       },
-      
     });
 
     onNext();
